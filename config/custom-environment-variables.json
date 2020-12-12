@@ -1,0 +1,36 @@
+{
+	"app": {
+		"auth": {
+            "apiKey": "AUTH_API_KEY",
+			"claims": {
+				"check": "AUTH_CLAIMS_CHECK",
+				"useDefault": "AUTH_CLAIMS_USE_DEFAULT"
+			}
+		},
+		"cors": {
+			"origin": "ORIGIN"
+		},
+		"discovery": {
+			"cleanupInterval": "CLEANUP_INTERVAL",
+			"heartbeatInterval": "HEARTBEAT_INTERVAL"
+		},
+		"db": {
+			"atlas" : {
+				"connection": "ALTAS_DB_CONNECTION",
+				"name": "ALTAS_DB_NAME"
+			},
+			"redis": {
+				"connection": "REDIS_DB_CONNECTION"
+			}
+		},
+		"grpc": {
+			"port": "GRPC_PORT",
+			"secure": "GRPC_SECURE"
+		},
+		"monitoring": {
+			"host": "MONITORING_HOST",
+			"port": "MONITORING_PORT"
+		},
+		"port": "PORT"
+	}
+}

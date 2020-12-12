@@ -1,0 +1,33 @@
+{
+	"app": {
+		"auth": {
+			"claims": {
+				"check": false,
+				"useDefault": false
+			}
+		},
+		"cors": {
+			"origin": "*"
+		},
+		"discovery": {
+			"cleanupInterval": 30,
+			"heartbeatInterval": 5
+		},
+		"grpc": {
+			"port": 7991,
+			"secure": false
+		},
+		"logging": {
+			"level": "debug",
+			"prettify": true,
+			"external": {
+				"type": "syslog"
+			}
+		},
+		"monitoring": {
+			"host": "localhost",
+			"port": "8125"
+		},
+		"port": 7990
+	}
+}
