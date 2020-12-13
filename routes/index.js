@@ -23,6 +23,17 @@ class RegistryRoute extends BaseRoute {
 			}
 		);
 
+		router.post('/listing',
+			koaBody({
+				text: false,
+			}),
+			async (ctx, next) => {
+				const service = this._injector.getService(Constants.InjectorKeys.SERVICE_REGISTRY);
+				const response = (await service.listing(ctx.correlationId, ctx.request.body)).check(ctx);
+				ctx.body = Utility.stringify(response);
+			}
+		);
+
 		router.post('/register',
 			koaBody({
 				text: false,

@@ -1,5 +1,7 @@
 import Constants from '../constants';
 
+import LibraryUtility from '@thzero/library_common/utility';
+
 import Service from '@thzero/library_server/service/index';
 
 class RegistryService extends Service {
@@ -14,7 +16,18 @@ class RegistryService extends Service {
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
 
-		// TODO: remove ones that aren't heartbeated?
+		const cleanupInterval = Number(this._config.get('registry.cleanupInterval', 45)) || 45;
+		const heartbeatInterval = Number(this._config.get('registry.heartbeatInterval', 15)) || 15;
+		this.timer = setInterval((async function () {
+			let correlationId = null;
+			try {
+				correlationId = LibraryUtility.generateId();
+				await this._repositoryRegistry.cleanup(correlationId, cleanupInterval);
+			}
+			catch(err) {
+				this.loggerServiceI.exception('AppBootMain', '_initServer', err, correlationId);
+			}
+		}).bind(this), heartbeatInterval * 1000);
 	}
 
 	async deregister(correlationId, name) {
@@ -32,6 +45,16 @@ class RegistryService extends Service {
 			return validationName;
 
 		const respositoryResponse = await this._repositoryRegistry.get(correlationId, name);
+		return respositoryResponse;
+	}
+
+	async listing(correlationId, filters) {
+		// const validationName = this._serviceValidation.check(correlationId, this._serviceValidation.filterSchema, filters, null, 'filters');
+		// if (!validationName.success)
+		// 	return validationName;
+		// TODO
+
+		const respositoryResponse = await this._repositoryRegistry.listing(correlationId, filters);
 		return respositoryResponse;
 	}
 
