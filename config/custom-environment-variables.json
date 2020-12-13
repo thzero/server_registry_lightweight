@@ -10,18 +10,10 @@
 		"cors": {
 			"origin": "ORIGIN"
 		},
-		"discovery": {
-			"cleanupInterval": "CLEANUP_INTERVAL",
-			"heartbeatInterval": "HEARTBEAT_INTERVAL"
-		},
-		"db": {
-			"atlas" : {
-				"connection": "ALTAS_DB_CONNECTION",
-				"name": "ALTAS_DB_NAME"
-			},
-			"redis": {
-				"connection": "REDIS_DB_CONNECTION"
-			}
+		"dns": {
+			"label": "DNS_LABEL",
+			"namespace": "DNS_NAMESPACE",
+			"local": "DNS_LOCAL"
 		},
 		"grpc": {
 			"port": "GRPC_PORT",
@@ -31,6 +23,9 @@
 			"host": "MONITORING_HOST",
 			"port": "MONITORING_PORT"
 		},
-		"port": "PORT"
+		"port": "PORT",
+		"registry": {
+			"heartbeatInterval": "REGISTRY_HEARTBEAT_INTERVAL"
+		}
 	}
 }

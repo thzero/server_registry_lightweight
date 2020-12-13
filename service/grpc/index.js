@@ -2,8 +2,8 @@ import Constants from '../../constants';
 
 import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
 
-const registryMessages = require('../../proto_registry/binary/registry_pb');
-const registryServices = require('../../proto_registry/binary/registry_grpc_pb');
+const registryMessages = require('../../proxy_registry/binary/registry_pb');
+const registryServices = require('../../proxy_registry/binary/registry_grpc_pb');
 
 class GrpcService extends ServerBaseGrpcService {
 	constructor() {

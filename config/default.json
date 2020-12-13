@@ -9,10 +9,6 @@
 		"cors": {
 			"origin": "*"
 		},
-		"discovery": {
-			"cleanupInterval": 30,
-			"heartbeatInterval": 5
-		},
 		"grpc": {
 			"port": 7991,
 			"secure": false
