@@ -1,3 +1,0 @@
-[submodule "proxy_registry"]
-	path = proxy_registry
-	url = https://github.com/thzero/library_server_proto_registry.git

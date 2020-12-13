@@ -36,6 +36,7 @@
     "@thzero/library_server_logger_winston": "^0.12.0",
     "@thzero/library_server_monitoring_appmetrics": "^0.12.0",
     "@thzero/library_server_service_discovery_mdns": "^0.12.5",
+    "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.12.5",
     "@thzero/library_server_service_grpc": "^0.12.2",
     "@thzero/library_server_service_rest_axios": "^0.12.2",
     "@thzero/library_server_validation_joi": "^0.12.0",
