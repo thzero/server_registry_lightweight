@@ -69,9 +69,13 @@ class RegistryRepository extends Repository {
 
 	async get(correlationId, name) {
 		try {
-			this._enforceNotNull('RegistryRepository', 'get', node, 'node', correlationId);
+			this._enforceNotNull('RegistryRepository', 'get', name, 'name', correlationId);
 
-			return this._successResponse(correlationId, this._registry.get(name));
+			const results = this._registry.get(name);
+			if (results)
+				return this._successResponse(results, correlationId);
+
+			return this._error('RegistryRepository', 'get', 'Not found.', null, null, null, correlationId);
 		}
 		catch (err) {
 			return this._error('RegistryRepository', 'get', null, err, null, null, correlationId);
