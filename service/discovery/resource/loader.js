@@ -32,6 +32,7 @@ class LoaderLightweightResourceDiscoveryService extends Service {
 			let node = null;
 			for(const resource of resources) {
 				node = LibraryUtility.cloneDeep(resource);
+				node.static = true;
 				this._logger.info2(`\tresource: ${node.name}`, null, correlationId);
 				response = await this._serviceResourceDiscovery.register(correlationId, node);
 				if (!response.success)
