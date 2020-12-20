@@ -54,7 +54,7 @@ class JoiValidationService extends JoiBaseValidationService {
 
 	registeryRegisterSchema = Joi.object({
 		name: this._name.required(),
-		address: this._address.required(),
+		address: this._address.required().allow(null).allow(''),
 		port: this._port.allow(null),
 		healthCheck: this._healthCheck.allow(null).allow(''),
 		healthcheck: this._healthCheck.allow(null).allow(''),

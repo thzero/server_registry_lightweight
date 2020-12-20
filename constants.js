@@ -9,6 +9,7 @@ const Constants = {
 
 		SERVICE_RESOURCE_DISCOVERY: 'serviceResourceDiscovery',
 		SERVICE_RESOURCE_DISCOVERY_GRPC: 'serviceResourceDiscoveryGrpc',
+		SERVICE_RESOURCE_DISCOVERY_LOADER: 'serviceResourceDiscoveryLoader',
 
 		SERVICE_VALIDATION: 'serviceValidation'
 	}

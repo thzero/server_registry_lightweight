@@ -7,7 +7,8 @@ import registryRepository from '../../repository/registry';
 import registryRoute from '../../routes/index';
 
 import cleanupService from '../../service/cleanup';
-import grpcResourceDiscoveryService from '../../service/grpc';
+import grpcResourceDiscoveryService from '../../service/discovery/resource/grpc';
+import loaderResourceDiscoveryService from '../../service/discovery/resource/loader';
 import resourceDiscoveryService from '../../service/discovery/resource';
 import restCommunicationService from '@thzero/library_server_service_rest_axios';
 import validationService from '../../service/validation/joi';
@@ -31,6 +32,7 @@ class AppApiBootPlugin extends ApiBootPlugin {
 
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY, new resourceDiscoveryService());
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_GRPC, new grpcResourceDiscoveryService());
+		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_LOADER, new loaderResourceDiscoveryService());
 
 		// this._injectService(Constants.InjectorKeys.SERVICE_GAMES, new gamesService());
 		this._injectService(Constants.InjectorKeys.SERVICE_CLEANUP, new cleanupService());

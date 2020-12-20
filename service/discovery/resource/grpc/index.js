@@ -1,6 +1,6 @@
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import Constants from '../../constants';
+import Constants from '../../../../constants';
 
 import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
 
