@@ -39,7 +39,7 @@ class JoiValidationService extends JoiBaseValidationService {
 	_secure = Joi.boolean();
 	_ttl = Joi.number();
 
-	registeryNameSchema = this._id.required();
+	registeryNameSchema = this._label.required();
 
 	dnsSchema = Joi.object({
 		label: this._label.required(),

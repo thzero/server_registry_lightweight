@@ -1,3 +1,5 @@
+import { Mutex as asyncMutex } from 'async-mutex';
+
 import Constants from '../../constants';
 
 import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
@@ -5,111 +7,89 @@ import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
 import registryMessages from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_pb';
 import registryServices from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_grpc_pb';
 
-class GrpcService extends ServerBaseGrpcService {
+class LightweightResourceDiscoveryGrpcService extends ServerBaseGrpcService {
 	constructor() {
 		super();
 
-		this._grpc = null;
+		this._mutex = new asyncMutex();
 
-		this._serviceRegistry = null;
+		this._client = null;
+
+		this._resourceDiscoveryService = null;
 	}
 
 	async _initServices(injector) {
-		this._serviceRegistry = this._injector.getService(Constants.InjectorKeys.SERVICE_REGISTRY);
+		this._resourceDiscoveryService = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
 
 		this._grpc.addService(registryServices.RegistryService, {
 			deregister: this.deregister.bind(this),
-			get: this.get.bind(this),
-			regoster: this.register.bind(this),
+			get: this.getService.bind(this),
+			register: this.register.bind(this)
 		});
 	}
 
 	deregister(call, callback) {
-		this._enforceNotNull('GrpcService', 'deregister', call, 'call');
-		this._enforceNotNull('GrpcService', 'deregister', callback, 'callback');
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'deregister', call, 'call');
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'deregister', callback, 'callback');
 
-		//const correlationId = this._correlationId(call);
-		const correlationId = call.request.getCorrelationid();
-		this._authenticate(correlationId, call);
+		const correlationId = this._authenticate(call);
 
 		(async () => {
 			try {
-				const response = await this._serviceRegistry.deregister(correlationId, call.request.getName());
+				const response = await this._resourceDiscoveryService.deregister(correlationId, call.request.getName());
 
 				const reply = new registryMessages.DeregisterResponse();
-				if (response.success)
-					reply.setClientid(response.results.clientId);
 				reply.setSuccess(response.success);
 				callback(null, reply);
 			}
 			catch (err) {
-				this._logger.exception('GrpcService', 'deregister', err, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryGrpcService', 'deregister', err, correlationId);
 				callback(err, null);
 			}
 		})();
 	}
 
-	get(call, callback) {
-		this._enforceNotNull('GrpcService', 'get', call, 'call');
-		this._enforceNotNull('GrpcService', 'get', callback, 'callback');
+	getService(call, callback) {
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'getService', call, 'call');
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'getService', callback, 'callback');
 
-		//const correlationId = this._correlationId(call);
-		const correlationId = call.request.getCorrelationid();
-		this._authenticate(correlationId, call);
+		const correlationId = this._authenticate(call);
 
 		(async () => {
 			try {
-				const response = await this._serviceRegistry.get(correlationId, call.request.getName());
+				const response = await this._resourceDiscoveryService.get(correlationId, call.request.getName());
 
 				const reply = new registryMessages.GetResponse();
-				if (response.success)
-					reply.setClientid(response.results.clientId);
 				reply.setSuccess(response.success);
 				callback(null, reply);
 			}
 			catch (err) {
-				this._logger.exception('GrpcService', 'get', err, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryGrpcService', 'getService', err, correlationId);
 				callback(err, null);
 			}
 		})();
 	}
 
 	register(call, callback) {
-		this._enforceNotNull('GrpcService', 'register', call, 'call');
-		this._enforceNotNull('GrpcService', 'register', callback, 'callback');
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'register', call, 'call');
+		this._enforceNotNull('LightweightResourceDiscoveryGrpcService', 'register', callback, 'callback');
 
-		//const correlationId = this._correlationId(call);
-		const correlationId = call.request.getCorrelationid();
-		this._authenticate(correlationId, call);
+		const correlationId = this._authenticate(call);
 
 		(async () => {
 			try {
-				const node = {
-					name: nodecall.request.getName(),
-					address: nodecall.request.getAddress(),
-					port: nodecall.request.getPort(),
-					healthCheck: nodecall.request.getHealtcheck(),
-					secure: nodecall.request.getSecure(),
-					grpc: {
-						port: nodecall.request.getGrpc().getPort(),
-						secure: nodecall.request.getGrpc().getSecure()
-					}
-				};
-
-				const response = await this._serviceRegistry.register(correlationId, node);
+				const response = await this._resourceDiscoveryService.register(correlationId, call.request.toObject());
 
 				const reply = new registryMessages.RegisterResponse();
-				if (response.success)
-					reply.setClientid(response.results.clientId);
 				reply.setSuccess(response.success);
 				callback(null, reply);
 			}
 			catch (err) {
-				this._logger.exception('GrpcService', 'register', err, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryGrpcService', 'register', err, correlationId);
 				callback(err, null);
 			}
 		})();
 	}
 }
 
-export default GrpcService;
+export default LightweightResourceDiscoveryGrpcService;
