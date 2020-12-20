@@ -4,12 +4,11 @@ const Constants = {
 
 		SERVICE_CLEANUP: 'serviceCleanup',
 
-		SERVICE_GRPC: 'serviceGrpc',
-
 		SERVICE_LOGGER_PINO: 'serviceLoggerPino',
 		SERVICE_LOGGER_WISTON: 'serviceLoggerWinston',
 
-		SERVICE_REGISTRY: 'serviceRegistry',
+		SERVICE_RESOURCE_DISCOVERY: 'serviceResourceDiscovery',
+		SERVICE_RESOURCE_DISCOVERY_GRPC: 'serviceResourceDiscoveryGrpc',
 
 		SERVICE_VALIDATION: 'serviceValidation'
 	}

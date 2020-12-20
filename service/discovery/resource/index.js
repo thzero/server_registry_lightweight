@@ -1,10 +1,10 @@
-import Constants from '../constants';
+import Constants from '../../../constants';
 
 import LibraryUtility from '@thzero/library_common/utility';
 
 import Service from '@thzero/library_server/service/index';
 
-class RegistryService extends Service {
+class LightweightResourceDiscoveryService extends Service {
 	constructor() {
 		super();
 
@@ -68,4 +68,4 @@ class RegistryService extends Service {
 	}
 }
 
-export default RegistryService;
+export default LightweightResourceDiscoveryService;
