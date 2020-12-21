@@ -49,10 +49,10 @@ class LightweightResourceDiscoveryService extends Service {
 	}
 
 	async listing(correlationId, filters) {
+		// TODO: filters
 		// const validationName = this._serviceValidation.check(correlationId, this._serviceValidation.filterSchema, filters, null, 'filters');
 		// if (!validationName.success)
 		// 	return validationName;
-		// TODO
 
 		const respositoryResponse = await this._repositoryRegistry.listing(correlationId, filters);
 		return respositoryResponse;
