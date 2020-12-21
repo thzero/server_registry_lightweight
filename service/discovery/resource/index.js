@@ -25,7 +25,7 @@ class LightweightResourceDiscoveryService extends Service {
 				await this._repositoryRegistry.cleanup(correlationId, cleanupInterval);
 			}
 			catch(err) {
-				this.loggerServiceI.exception('AppBootMain', '_initServer', err, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryService', '_initServer', err, correlationId);
 			}
 		}).bind(this), heartbeatInterval * 1000);
 	}
