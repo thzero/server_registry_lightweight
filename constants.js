@@ -11,6 +11,10 @@ const Constants = {
 		SERVICE_RESOURCE_DISCOVERY_GRPC: 'serviceResourceDiscoveryGrpc',
 		SERVICE_RESOURCE_DISCOVERY_LOADER: 'serviceResourceDiscoveryLoader',
 
+		SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK: 'serviceResourceDiscoveryHealthcheck',
+		SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_GRPC: 'serviceResourceDiscoveryHealthcheckGrpc',
+		SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_HTTP: 'serviceResourceDiscoveryHealthcheckHttp',
+
 		SERVICE_VALIDATION: 'serviceValidation'
 	}
 }

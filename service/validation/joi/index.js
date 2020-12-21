@@ -45,8 +45,18 @@ class JoiValidationService extends JoiBaseValidationService {
 	_secure = Joi.boolean();
 	_static = Joi.boolean();
 	_ttl = Joi.number();
+	_type = Joi.string()
+		.trim()
+		//.alphanum()
+		.regex(/^([a-zA-Z]*)*$/)
+		.min(3)
+		.max(30);
 
 	registeryNameSchema = this._label.required();
+
+	authenticationSchema = Joi.object({
+		apiKey: this._apiKey.allow(null).allow('')
+	});
 
 	dnsSchema = Joi.object({
 		label: this._label.required(),
@@ -55,20 +65,24 @@ class JoiValidationService extends JoiBaseValidationService {
 	});
 
 	grpcSchema = Joi.object({
+		enabled: Joi.boolean().allow(null),
 		port: this._port.allow(null),
 		secure: this._secure.allow(null)
 	});
 
-	authenticationSchema = Joi.object({
-		apiKey: this._apiKey.allow(null).allow('')
+	healthCheckSchema = Joi.object({
+		enabled: Joi.boolean().allow(null),
+		healthCheck: this._healthCheck.allow(null).allow(''),
+		interval: Joi.number(),
+		type: this._type.allow(null).allow('')
 	});
 
 	registeryRegisterSchema = Joi.object({
 		name: this._name.required(),
 		address: this._address.required().allow(null).allow(''),
 		port: this._port.allow(null),
-		healthCheck: this._healthCheck.allow(null).allow(''),
-		healthcheck: this._healthCheck.allow(null).allow(''),
+		healthCheck: this.healthCheckSchema.allow(null),
+		healthcheck: this.healthCheckSchema.allow(null),
 		notes: this._notes.allow(null).allow(''),
 		secure: this._secure.allow(null),
 		static: this._static.allow(null),

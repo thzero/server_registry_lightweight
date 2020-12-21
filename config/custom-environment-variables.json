@@ -25,6 +25,8 @@
 		},
 		"port": "PORT",
 		"registry": {
+			"cleanupInterval": "REGISTRY_CLEANUP_INTERVAL",
+			"healthCheckInterval": "REGISTRY_HEALTHCHECK_INTERVAL",
 			"heartbeatInterval": "REGISTRY_HEARTBEAT_INTERVAL"
 		}
 	}
