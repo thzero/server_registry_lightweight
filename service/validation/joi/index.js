@@ -59,7 +59,7 @@ class JoiValidationService extends JoiBaseValidationService {
 		secure: this._secure.allow(null)
 	});
 
-	authorizationSchema = Joi.object({
+	authenticationSchema = Joi.object({
 		apiKey: this._apiKey.allow(null).allow('')
 	});
 
@@ -75,7 +75,7 @@ class JoiValidationService extends JoiBaseValidationService {
 		ttl: this._ttl.allow(null),
 		grpc: this.grpcSchema.allow(null),
 		dns: this.dnsSchema.allow(null),
-		authorization: this.authorizationSchema.allow(null)
+		authentication: this.authenticationSchema.allow(null)
 	});
 }
 
