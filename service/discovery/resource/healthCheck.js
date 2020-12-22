@@ -10,6 +10,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = null;
 
+		this._serviceNotification = null;
 		this._serviceResourceDiscovery = null;
 
 		this._services = new Map();
@@ -20,7 +21,9 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
 
+		this._serviceNotification = this._injector.getService(Constants.InjectorKeys.SERVICE_NOTIFICATION);
 		this._serviceResourceDiscovery = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
+
 
 		this._services.set('grpc', this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_GRPC));
 		this._services.set('http', this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_HTTP));
@@ -81,42 +84,54 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 	}
 
 	async _healthCheckPerform(correlationId, resource) {
-		let name = '';
-		let type = '';
 		try {
 			this._enforceNotNull('LightweightResourceDiscoveryService', '_healthCheckPerform', resource, 'resource', correlationId);
 
-			if (!resource.healthCheck)
-				return this._success(correlationId);
+			try {
+				if (!resource.healthCheck)
+					return this._success(correlationId);
 
-			const enabled = resource.healthCheck.enabled !== undefined && resource.healthCheck.enabled !== null ? resource.healthCheck.enabled : true;
-			this._logger.debug('LightweightResourceDiscoveryService', '_healthCheckPerform', 'enabled', enabled, correlationId);
-			if (!enabled)
-				return this._success(correlationId);
+				const enabled = resource.healthCheck.enabled !== undefined && resource.healthCheck.enabled !== null ? resource.healthCheck.enabled : true;
+				this._logger.debug('LightweightResourceDiscoveryService', '_healthCheckPerform', 'enabled', enabled, correlationId);
+				if (!enabled)
+					return this._success(correlationId);
 
-			name = resource.name;
+				this._logger.debug('LightweightResourceDiscoveryService', '_healthCheckPerform', 'healthCheck.type', resource.healthCheck.type, correlationId);
+				const type = resource.healthCheck.type ? resource.healthCheck.type : 'http';
+				this._logger.debug('LightweightResourceDiscoveryService', '_healthCheckPerform', 'type', type, correlationId);
+				const service = this._services.get(type);
+				if (!service)
+					throw Error(`Invalid healthcheck '${type}' service.`);
 
-			type = 'http';
-			this._logger.debug('LightweightResourceDiscoveryService', '_healthCheckPerform', 'type', resource.healthCheck.type, correlationId);
-			if (resource.healthCheck.type)
-				type = resource.healthCheck;
-			const service = this._services.get(type);
-			if (!service)
-				throw Error(`Invalid healthcheck '${type}' service.`);
+				this._logger.info2(`\tHealthcheck for '${resource.name}' via '${type}'...`, null, correlationId);
 
-			this._logger.info2(`\tHealthcheck for '${resource.name}' via '${type}'...`, null, correlationId);
-
-			const response = await service.perform(correlationId, resource);
-			if (response.success)
+				const response = await service.perform(correlationId, resource);
+				resource.status = response.success ? 200 : 503;
 				await this._repositoryRegistry.register(correlationId, resource);
 
-			this._logger.info2(`\t...healthcheck for '${name}' ${response.success ? 'successful' : 'failed'}.`, null, correlationId);
-			return response;
+				this._logger.info2(`\t...healthcheck for '${resource.name}' ${response.success ? 'succeeded' : 'failed'}.`, null, correlationId);
+
+				if (!response.success)
+					this._notification(correlationId, resource);
+
+				return response;
+			}
+			catch(err) {
+				this._logger.info2(`\t...healthcheck for '${resource.name}' failed}.`, null, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryService', '_healthCheckPerform', err, correlationId);
+
+				this._notification(correlationId, resource);
+			}
 		}
 		catch(err) {
-			this._logger.info2(`\t...healthcheck for '${name}' failed'.`, null, correlationId);
 			this._logger.exception('LightweightResourceDiscoveryService', '_healthCheckPerform', err, correlationId);
 		}
+	}
+
+	_notification(correlationId, resource) {
+		(async () => {
+			await this._serviceNotification.send(correlationId, resource);
+		})();
 	}
 }
 

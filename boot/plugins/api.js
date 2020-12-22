@@ -7,6 +7,7 @@ import registryRepository from '../../repository/registry';
 import registryRoute from '../../routes/index';
 
 import cleanupService from '../../service/cleanup';
+import devnullNotificationService from '../../service/notification/devnull';
 import grpcResourceDiscoveryService from '../../service/discovery/resource/grpc';
 import grpcHealthcheckResourceDiscoveryService from '../../service/discovery/resource/grpc/healthCheck';
 import httpHealthcheckResourceDiscoveryService from '../../service/discovery/resource/http/healthCheck';
@@ -43,11 +44,17 @@ class AppApiBootPlugin extends ApiBootPlugin {
 		// this._injectService(Constants.InjectorKeys.SERVICE_GAMES, new gamesService());
 		this._injectService(Constants.InjectorKeys.SERVICE_CLEANUP, new cleanupService());
 
+		this._injectService(Constants.InjectorKeys.SERVICE_NOTIFICATION, this._initServicesNotification());
+
 		this._injectService(Constants.InjectorKeys.SERVICE_VALIDATION, new validationService());
 	}
 
 	_initServicesCommunicationRest() {
 		return new restCommunicationService();
+	}
+
+	_initServicesNotification() {
+		return new devnullNotificationService();
 	}
 
 	_initServicesVersion() {
