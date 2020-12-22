@@ -117,7 +117,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 				return response;
 			}
 			catch(err) {
-				this._logger.info2(`\t...healthcheck for '${resource.name}' failed}.`, null, correlationId);
+				this._logger.info2(`\t...healthcheck for '${resource.name}' failed.`, null, correlationId);
 				this._logger.exception('LightweightResourceDiscoveryService', '_healthCheckPerform', err, correlationId);
 
 				this._notification(correlationId, resource);
