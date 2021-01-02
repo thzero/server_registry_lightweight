@@ -1,10 +1,10 @@
 {
   "name": "server_registry_lightweight",
-  "version": "0.12.12",
+  "version": "0.12.13",
   "version_major": 0,
   "version_minor": 12,
-  "version_patch": 12,
-  "version_date": "01/01/2021",
+  "version_patch": 13,
+  "version_date": "01/02/2021",
   "license": "MIT",
   "description": "",
   "author": "thZero",
