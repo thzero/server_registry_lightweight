@@ -10,6 +10,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = null;
 
+		this._serviceMonitoring = null;
 		this._serviceNotification = null;
 		this._serviceResourceDiscovery = null;
 
@@ -21,9 +22,9 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
 
+		this._serviceMonitoring = this._injector.getService(LibraryConstants.InjectorKeys.SERVICE_MONITORING);
 		this._serviceNotification = this._injector.getService(Constants.InjectorKeys.SERVICE_NOTIFICATION);
 		this._serviceResourceDiscovery = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
-
 
 		this._services.set('grpc', this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_GRPC));
 		this._services.set('http', this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_HTTP));
@@ -110,6 +111,8 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 				await this._repositoryRegistry.register(correlationId, resource);
 
 				this._logger.info2(`\t...healthcheck for '${resource.name}' ${response.success ? 'succeeded' : 'failed'}.`, null, correlationId);
+
+				await this._serviceMonitoring.gauge(correlationId, 'discovery.registry.healthcheck', responseCount.results ? 1 : 0, null, { tag: resource.name });
 
 				if (!response.success)
 					this._notification(correlationId, resource);

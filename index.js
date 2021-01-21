@@ -40,6 +40,6 @@ class AppBootMain extends BootMain {
 	}
 }
 
-(async function() {
+(async function () {
 	await (new AppBootMain()).start(ApiPlugin);
 })();
