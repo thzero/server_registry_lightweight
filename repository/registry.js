@@ -28,6 +28,9 @@ class RegistryRepository extends Repository {
 			const deletable = [];
 			let delta = 0;
 			this._registry.forEach((value, key, map) => {
+				if (value.static)
+					return;
+
 				delta = now - value.timestamp;
 				if (delta <= cleanupInterval)
 					return;

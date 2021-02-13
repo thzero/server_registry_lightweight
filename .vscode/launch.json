@@ -12,7 +12,7 @@
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen",
 			"env": { "LOG_LEVEL" : "debug", "GRPC_VERBOSITY" : "DEBUG", "GRPC_TRACE": "all" },
-			"port": 9229
+			"port": 9990
 		}
 	]
 }

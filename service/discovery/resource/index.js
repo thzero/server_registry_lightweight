@@ -15,17 +15,19 @@ class LightweightResourceDiscoveryService extends Service {
 		await super.init(injector);
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
+	}
 
+	async initPost() {
 		const cleanupInterval = Number(this._config.get('registry.cleanupInterval', 45)) || 45;
 		const heartbeatInterval = Number(this._config.get('registry.heartbeatInterval', 15)) || 15;
-		this.timer = setInterval((async function () {
+		setInterval((async function () {
 			let correlationId = null;
 			try {
 				correlationId = LibraryUtility.generateId();
 				await this._repositoryRegistry.cleanup(correlationId, cleanupInterval);
 			}
 			catch(err) {
-				this.loggerServiceI.exception('AppBootMain', '_initServer', err, correlationId);
+				this._logger.exception('LightweightResourceDiscoveryService', '_initServer.cleanup', err, correlationId);
 			}
 		}).bind(this), heartbeatInterval * 1000);
 	}
@@ -49,10 +51,10 @@ class LightweightResourceDiscoveryService extends Service {
 	}
 
 	async listing(correlationId, filters) {
+		// TODO: filters
 		// const validationName = this._serviceValidation.check(correlationId, this._serviceValidation.filterSchema, filters, null, 'filters');
 		// if (!validationName.success)
 		// 	return validationName;
-		// TODO
 
 		const respositoryResponse = await this._repositoryRegistry.listing(correlationId, filters);
 		return respositoryResponse;

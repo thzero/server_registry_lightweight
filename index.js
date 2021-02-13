@@ -1,5 +1,7 @@
 import Constants from './constants';
 
+import LibraryUtility from '@thzero/library_common/utility';
+
 import ApiPlugin from './boot/plugins/api';
 
 import BootMain from '@thzero/library_server/boot/main';
@@ -16,6 +18,14 @@ class AppBootMain extends BootMain {
 		return new usageMetricsRepository();
 	}
 
+	async _initServer(serverHttp) {
+		const serviceResourceDiscoverLoader = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_LOADER);
+		if (!serviceResourceDiscoverLoader)
+			return;
+
+		await serviceResourceDiscoverLoader.load(LibraryUtility.generateId());
+	}
+
 	_initServicesLoggers() {
 		this._registerServicesLogger(Constants.InjectorKeys.SERVICE_LOGGER_PINO, new pinoLoggerService());
 		this._registerServicesLogger(Constants.InjectorKeys.SERVICE_LOGGER_WISTON, new winstonLoggerService());
@@ -30,6 +40,6 @@ class AppBootMain extends BootMain {
 	}
 }
 
-(async function() {
+(async function () {
 	await (new AppBootMain()).start(ApiPlugin);
 })();

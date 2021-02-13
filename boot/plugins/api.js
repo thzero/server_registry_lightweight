@@ -7,7 +7,12 @@ import registryRepository from '../../repository/registry';
 import registryRoute from '../../routes/index';
 
 import cleanupService from '../../service/cleanup';
-import grpcResourceDiscoveryService from '../../service/grpc';
+import devnullNotificationService from '../../service/notification/devnull';
+import grpcResourceDiscoveryService from '../../service/discovery/resource/grpc';
+import grpcHealthcheckResourceDiscoveryService from '../../service/discovery/resource/grpc/healthCheck';
+import httpHealthcheckResourceDiscoveryService from '../../service/discovery/resource/http/healthCheck';
+import healthcheckResourceDiscoveryService from '../../service/discovery/resource/healthCheck';
+import loaderResourceDiscoveryService from '../../service/discovery/resource/loader';
 import resourceDiscoveryService from '../../service/discovery/resource';
 import restCommunicationService from '@thzero/library_server_service_rest_axios';
 import validationService from '../../service/validation/joi';
@@ -31,15 +36,25 @@ class AppApiBootPlugin extends ApiBootPlugin {
 
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY, new resourceDiscoveryService());
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_GRPC, new grpcResourceDiscoveryService());
+		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_LOADER, new loaderResourceDiscoveryService());
+		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK, new healthcheckResourceDiscoveryService());
+		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_GRPC, new grpcHealthcheckResourceDiscoveryService());
+		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_HEALTHCHECK_HTTP, new httpHealthcheckResourceDiscoveryService());
 
 		// this._injectService(Constants.InjectorKeys.SERVICE_GAMES, new gamesService());
 		this._injectService(Constants.InjectorKeys.SERVICE_CLEANUP, new cleanupService());
+
+		this._injectService(Constants.InjectorKeys.SERVICE_NOTIFICATION, this._initServicesNotification());
 
 		this._injectService(Constants.InjectorKeys.SERVICE_VALIDATION, new validationService());
 	}
 
 	_initServicesCommunicationRest() {
 		return new restCommunicationService();
+	}
+
+	_initServicesNotification() {
+		return new devnullNotificationService();
 	}
 
 	_initServicesVersion() {
