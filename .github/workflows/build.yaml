@@ -102,7 +102,3 @@ jobs:
       with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.pull-request.outputs.pr_number }}
-    - run: npm publish --access public
-      if: steps.git-changes.outputs.changed == 1 && success()
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
