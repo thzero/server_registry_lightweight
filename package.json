@@ -1,10 +1,10 @@
 {
   "name": "server_registry_lightweight",
-  "version": "0.13.8",
+  "version": "0.13.9",
   "version_major": 0,
   "version_minor": 13,
-  "version_patch": 8,
-  "version_date": "05/18/2021",
+  "version_patch": 9,
+  "version_date": "06/07/2021",
   "license": "MIT",
   "description": "",
   "author": "thZero",
@@ -28,28 +28,28 @@
     "cli-update": "./node_modules/.bin/library-cli --updateversion --pi"
   },
   "dependencies": {
-    "@thzero/library_server": "^0.13.18",
+    "@thzero/library_server": "^0.13.19",
     "@thzero/library_server_logger_pino": "^0.13.11",
     "@thzero/library_server_logger_winston": "^0.13.6",
-    "@thzero/library_server_monitoring_appmetrics": "^0.13.7",
+    "@thzero/library_server_monitoring_appmetrics": "^0.13.8",
     "@thzero/library_server_service_discovery_mdns": "^0.13.7",
-    "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.13.11",
+    "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.13.12",
     "@thzero/library_server_service_grpc": "^0.13.12",
     "@thzero/library_server_service_rest_axios": "^0.13.6",
     "@thzero/library_server_validation_joi": "^0.13.6",
     "appmetrics": "^5.1.1",
-    "pino-pretty": "^4.8.0"
+    "pino-pretty": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
     "@thzero/library_cli": "^0.13.14",
     "babel-loader": "^8.2.2",
-    "eslint": "^7.26.0",
+    "eslint": "^7.28.0",
     "eslint-plugin-node": "^11.1.0",
     "grpc_tools_node_protoc_ts": "^5.2.2",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0"
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.1"
   }
 }
