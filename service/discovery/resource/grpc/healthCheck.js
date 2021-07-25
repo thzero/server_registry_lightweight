@@ -6,9 +6,9 @@ class GrpcHealthCheckLightweightResourceDiscoveryService extends Service {
 	}
 
 	async perform(correlationId, resource) {
-        this._enforceNotNull('GrpcHealthCheckLightweightResourceDiscoveryService', 'perform', resource, 'resource', correlationId);
+		this._enforceNotNull('GrpcHealthCheckLightweightResourceDiscoveryService', 'perform', resource, 'resource', correlationId);
 
-        if (!resource.grpc) {
+		if (!resource.grpc) {
 			this._logger.warn('GrpcHealthCheckLightweightResourceDiscoveryService', 'perform', 'No grpc resource provided', correlationId);
 			return this._error('GrpcHealthCheckLightweightResourceDiscoveryService', 'perform', 'No grpc resource provided.', null, null, null, correlationId);
 		}
