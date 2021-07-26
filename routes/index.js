@@ -12,7 +12,7 @@ class RegistryRoute extends BaseRoute {
 	}
 
 	_initializeRoutes(router) {
-		router.post('/deregister/:name',
+		router.delete('/:name',
 			koaBody({
 				text: false,
 			}),
@@ -34,7 +34,7 @@ class RegistryRoute extends BaseRoute {
 			}
 		);
 
-		router.post('/register',
+		router.post('/',
 			koaBody({
 				text: false,
 			}),
