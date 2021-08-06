@@ -1,10 +1,10 @@
 {
   "name": "server_registry_lightweight",
-  "version": "0.13.13",
+  "version": "0.13.14",
   "version_major": 0,
   "version_minor": 13,
-  "version_patch": 13,
-  "version_date": "08/04/2021",
+  "version_patch": 14,
+  "version_date": "08/06/2021",
   "license": "MIT",
   "description": "",
   "author": "thZero",
@@ -28,7 +28,7 @@
     "cli-update": "./node_modules/.bin/library-cli --updateversion --pi"
   },
   "dependencies": {
-    "@thzero/library_server": "^0.13.25",
+    "@thzero/library_server": "^0.13.26",
     "@thzero/library_server_logger_pino": "^0.13.13",
     "@thzero/library_server_logger_winston": "^0.13.6",
     "@thzero/library_server_monitoring_appmetrics": "^0.13.10",
@@ -41,15 +41,15 @@
     "pino-pretty": "^5.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
+    "@babel/core": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/preset-env": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
     "@thzero/library_cli": "^0.13.14",
     "babel-loader": "^8.2.2",
     "eslint": "^7.32.0",
     "eslint-plugin-node": "^11.1.0",
     "grpc_tools_node_protoc_ts": "^5.3.1",
-    "webpack": "^5.48.0",
+    "webpack": "^5.49.0",
     "webpack-cli": "^4.7.2"
   }
 }
