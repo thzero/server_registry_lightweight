@@ -1,4 +1,5 @@
 import Constants from '../../../constants';
+import LibraryCommonServiceConstants from '@thzero/library_common_service/constants';
 
 import LibraryUtility from '@thzero/library_common/utility';
 
@@ -22,7 +23,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
 
-		this._serviceMonitoring = this._injector.getService(LibraryConstants.InjectorKeys.SERVICE_MONITORING);
+		this._serviceMonitoring = this._injector.getService(LibraryCommonServiceConstants.InjectorKeys.SERVICE_MONITORING);
 		this._serviceNotification = this._injector.getService(Constants.InjectorKeys.SERVICE_NOTIFICATION);
 		this._serviceResourceDiscovery = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
 

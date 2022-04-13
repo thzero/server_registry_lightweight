@@ -4,11 +4,11 @@ import LibraryUtility from '@thzero/library_common/utility';
 
 import ApiPlugin from './boot/plugins/api';
 
-import BootMain from '@thzero/library_server/boot/main';
+import BootMain from '@thzero/library_server/boot/koa';
 
 import usageMetricsRepository from '@thzero/library_server/repository/usageMetrics/devnull';
 
-import appMetricsMonitoringService from '@thzero/library_server_monitoring_appmetrics';
+// import appMetricsMonitoringService from '@thzero/library_server_monitoring_appmetrics';
 import pinoLoggerService from '@thzero/library_server_logger_pino';
 import mdnsDiscoveryService from '@thzero/library_server_service_discovery_mdns';
 import winstonLoggerService from '@thzero/library_server_logger_winston';
@@ -35,9 +35,9 @@ class AppBootMain extends BootMain {
 		return new mdnsDiscoveryService();
 	}
 
-	_initServicesMonitoring() {
-		return new appMetricsMonitoringService();
-	}
+	// _initServicesMonitoring() {
+	// 	return new appMetricsMonitoringService();
+	// }
 }
 
 (async function () {

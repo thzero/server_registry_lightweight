@@ -1,5 +1,6 @@
 {
   "name": "server_registry_lightweight",
+  "type": "module",
   "version": "0.13.17",
   "version_major": 0,
   "version_minor": 13,
@@ -28,28 +29,29 @@
     "cli-update": "./node_modules/.bin/library-cli --updateversion --pi"
   },
   "dependencies": {
-    "@thzero/library_server": "^0.13.34",
-    "@thzero/library_server_logger_pino": "^0.13.18",
-    "@thzero/library_server_logger_winston": "^0.13.9",
-    "@thzero/library_server_monitoring_appmetrics": "^0.13.12",
-    "@thzero/library_server_service_discovery_mdns": "^0.13.9",
-    "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.13.17",
-    "@thzero/library_server_service_grpc": "^0.13.18",
-    "@thzero/library_server_service_rest_axios": "^0.13.9",
-    "@thzero/library_server_validation_joi": "^0.13.8",
-    "appmetrics": "^5.1.1",
-    "pino-pretty": "^7.0.1"
+    "@thzero/library_common": "^0.15.8",
+    "@thzero/library_common_service": "^0.15.11",
+    "@thzero/library_server": "^0.15.11",
+    "@thzero/library_server_logger_pino": "^0.15.10",
+    "@thzero/library_server_logger_winston": "^0.15.9",
+    "@thzero/library_server_service_discovery_mdns": "^0.15.8",
+    "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.15.14",
+    "@thzero/library_server_service_grpc": "^0.15.9",
+    "@thzero/library_server_service_rest_axios": "^0.15.8",
+    "@thzero/library_server_validation_joi": "^0.15.7",
+    "async-mutex": "^0.3.2",
+    "pino-pretty": "^7.6.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/preset-env": "^7.15.6",
-    "@thzero/library_cli": "^0.13.19",
-    "babel-loader": "^8.2.2",
-    "eslint": "^7.32.0",
+    "@babel/core": "^7.17.9",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/preset-env": "^7.16.11",
+    "@thzero/library_cli": "^0.15.8",
+    "babel-loader": "^8.2.4",
+    "eslint": "^8.13.0",
     "eslint-plugin-node": "^11.1.0",
     "grpc_tools_node_protoc_ts": "^5.3.2",
-    "webpack": "^5.54.0",
-    "webpack-cli": "^4.8.0"
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }
