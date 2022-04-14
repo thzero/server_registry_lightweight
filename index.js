@@ -1,6 +1,6 @@
 import Constants from './constants';
 
-import LibraryUtility from '@thzero/library_common/utility';
+import LibraryUtility from '@thzero/library_common/utility/index';
 
 import ApiPlugin from './boot/plugins/api';
 
@@ -18,7 +18,7 @@ class AppBootMain extends BootMain {
 		return new usageMetricsRepository();
 	}
 
-	async _initServer(serverHttp) {
+	async _initServer() {
 		const serviceResourceDiscoverLoader = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_LOADER);
 		if (!serviceResourceDiscoverLoader)
 			return;

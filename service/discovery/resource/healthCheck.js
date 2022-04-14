@@ -1,7 +1,7 @@
 import Constants from '../../../constants';
 import LibraryCommonServiceConstants from '@thzero/library_common_service/constants';
 
-import LibraryUtility from '@thzero/library_common/utility';
+import LibraryUtility from '@thzero/library_common/utility/index';
 
 import Service from '@thzero/library_server/service/index';
 

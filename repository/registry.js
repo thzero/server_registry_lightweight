@@ -1,8 +1,8 @@
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import Repository from '@thzero/library_server/repository';
+import Repository from '@thzero/library_server/repository/index';
 
-import LibraryUtility from '@thzero/library_common/utility';
+import LibraryUtility from '@thzero/library_common/utility/index';
 
 class RegistryRepository extends Repository {
 	async init(injector) {

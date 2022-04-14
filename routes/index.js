@@ -2,7 +2,7 @@ import koaBody from 'koa-body';
 
 import Constants from '../constants';
 
-import Utility from '@thzero/library_common/utility';
+import Utility from '@thzero/library_common/utility/index';
 
 import BaseRoute from '@thzero/library_server/routes/index';
 
