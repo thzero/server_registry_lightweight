@@ -54,9 +54,15 @@ class RegistryRepository extends Repository {
 	}
 
 	async deregister(correlationId, name) {
+		this._enforceNotNull('RegistryRepository', 'deregister', name, 'name', correlationId);
+
+		if (!this._registry.has(name))
+			return this._success(correlationId);
+
 		const release = await this._mutexRegistry.acquire();
 		try {
-			this._enforceNotNull('RegistryRepository', 'deregister', name, 'name', correlationId);
+			if (!this._registry.has(name))
+				return this._success(correlationId);
 
 			this._registry.delete(name);
 
@@ -85,19 +91,6 @@ class RegistryRepository extends Repository {
 		}
 	}
 
-	async heartbeat(correlationId) {
-		const release = await this._mutexRegistry.acquire();
-		try {
-			return this._success(correlationId);
-		}
-		catch (err) {
-			return this._error('RegistryRepository', 'heartbeat', null, err, null, null, correlationId);
-		}
-		finally {
-			release();
-		}
-	}
-
 	async listing(correlationId) {
 		try {
 			return this._successResponse(this._mapToArrayOfObj(this._registry), correlationId);
@@ -108,17 +101,56 @@ class RegistryRepository extends Repository {
 	}
 
 	async register(correlationId, node) {
+		this._enforceNotNull('RegistryRepository', 'register', node, 'node', correlationId);
+
 		const release = await this._mutexRegistry.acquire();
 		try {
-			this._enforceNotNull('RegistryRepository', 'register', node, 'node', correlationId);
-
 			node.timestamp = LibraryUtility.getTimestamp();
+			node.successes = 0;
+			node.successesAccumulator = 0;
 			this._registry.set(node.name, node);
 
 			return this._success(correlationId);
 		}
 		catch (err) {
 			return this._error('RegistryRepository', 'register', null, err, null, null, correlationId);
+		}
+		finally {
+			release();
+		}
+	}
+
+	async update(correlationId, name, node, success) {
+		this._enforceNotEmpty('RegistryRepository', 'register', name, 'name', correlationId);
+		this._enforceNotNull('RegistryRepository', 'register', node, 'node', correlationId);
+
+		if (!this._registry.has(name))
+			return this._success(correlationId);
+
+		const release = await this._mutexRegistry.acquire();
+		try {
+			if (!this._registry.has(name))
+				return this._success(correlationId);
+
+			const node = this._registry.get(name);
+			node.timestamp = LibraryUtility.getTimestamp();
+			if (success) {
+				node.successes += 1;
+				if (node.successes === 1000000) {
+					node.successesAccumulator +=1;
+					node.successes = 0;
+				}
+			}
+			else {
+				node.successes = 0;
+				node.successesAccumulator = 0;
+			}
+			this._registry.set(node.name, node);
+
+			return this._success(correlationId);
+		}
+		catch (err) {
+			return this._error('RegistryRepository', 'update', null, err, null, null, correlationId);
 		}
 		finally {
 			release();

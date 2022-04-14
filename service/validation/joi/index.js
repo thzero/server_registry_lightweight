@@ -2,7 +2,7 @@ import Joi from '@hapi/joi';
 import JoiDate from '@hapi/joi-date';
 Joi.extend(JoiDate);
 
-import JoiBaseValidationService from '@thzero/library_server_validation_joi';
+import JoiBaseValidationService from '@thzero/library_server_validation_joi/index';
 
 class JoiValidationService extends JoiBaseValidationService {
 	_address = Joi.string()
