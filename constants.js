@@ -1,6 +1,7 @@
 const Constants = {
 	InjectorKeys: {
 		REPOSITORY_REGISTRY: 'repositoryRegistry',
+		REPOSITORY_REGISTRY_SEARCH: 'repositoryRegistrySearch',
 
 		SERVICE_CLEANUP: 'serviceCleanup',
 

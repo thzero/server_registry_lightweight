@@ -1,8 +1,13 @@
 import Constants from '../../constants';
+import RepositoryConstants from '@thzero/library_server_repository_mongo/constants';
 
 import ApiBootPlugin from '@thzero/library_server/boot/plugins/api';
 
-import registryRepository from '../../repository/registry';
+import repositoryCollectionsService from '../../repository/mongo/collections';
+
+// import registryRepository from '../../repository/inmemory/registry';
+import registryRepository from '../../repository/redis/registry';
+import registrySearchRepository from '../../repository/mongo/registry';
 
 import registryRoute from '../../routes/index';
 
@@ -23,6 +28,7 @@ class AppApiBootPlugin extends ApiBootPlugin {
 		await super._initRepositories();
 
 		this._injectRepository(Constants.InjectorKeys.REPOSITORY_REGISTRY, new registryRepository());
+		this._injectRepository(Constants.InjectorKeys.REPOSITORY_REGISTRY_SEARCH, new registrySearchRepository());
 	}
 
 	async _initRoutes() {
@@ -33,6 +39,8 @@ class AppApiBootPlugin extends ApiBootPlugin {
 
 	async _initServices() {
 		await super._initServices();
+
+		this._injectService(RepositoryConstants.InjectorKeys.SERVICE_REPOSITORY_COLLECTIONS, new repositoryCollectionsService());
 
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY, new resourceDiscoveryService());
 		this._injectService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY_GRPC, new grpcResourceDiscoveryService());
