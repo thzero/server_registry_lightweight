@@ -1,6 +1,7 @@
 import Constants from '../../../constants';
+import LibraryCommonServiceConstants from '@thzero/library_common_service/constants';
 
-import LibraryUtility from '@thzero/library_common/utility';
+import LibraryUtility from '@thzero/library_common/utility/index';
 
 import Service from '@thzero/library_server/service/index';
 
@@ -22,7 +23,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
 
-		this._serviceMonitoring = this._injector.getService(LibraryConstants.InjectorKeys.SERVICE_MONITORING);
+		this._serviceMonitoring = this._injector.getService(LibraryCommonServiceConstants.InjectorKeys.SERVICE_MONITORING);
 		this._serviceNotification = this._injector.getService(Constants.InjectorKeys.SERVICE_NOTIFICATION);
 		this._serviceResourceDiscovery = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
 
@@ -108,11 +109,11 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 
 				const response = await service.perform(correlationId, resource);
 				resource.status = response.success ? 200 : 503;
-				await this._repositoryRegistry.register(correlationId, resource);
+				await this._repositoryRegistry.update(correlationId, resource.name, resource, response.success);
 
 				this._logger.info2(`\t...healthcheck for '${resource.name}' ${response.success ? 'succeeded' : 'failed'}.`, null, correlationId);
 
-				await this._serviceMonitoring.gauge(correlationId, 'discovery.registry.healthcheck', responseCount.results ? 1 : 0, null, { tag: resource.name });
+				await this._serviceMonitoring.gauge(correlationId, 'discovery.registry.healthcheck', response.success ? 1 : 0, null, { tag: resource.name });
 
 				if (!response.success)
 					this._notification(correlationId, resource);

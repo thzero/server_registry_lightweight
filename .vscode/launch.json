@@ -6,6 +6,18 @@
 			"request": "launch",
 			"name": "Node: Nodemon",
 			"runtimeExecutable": "nodemon",
+			"runtimeArgs":["--experimental-specifier-resolution","node"],
+			"program": "${workspaceFolder}/index.js",
+			"restart": true,
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"env": { "LOG_LEVEL" : "debug" }
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Node: Nodemon2",
+			"runtimeExecutable": "nodemon",
 			"runtimeArgs":["-r","esm", "--inspect", "--trace-warnings"],
 			"program": "${workspaceFolder}/index.js",
 			"restart": true,

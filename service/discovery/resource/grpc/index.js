@@ -4,8 +4,8 @@ import Constants from '../../../../constants';
 
 import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
 
-import registryMessages from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_pb';
-import registryServices from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_grpc_pb';
+import registryMessages from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_pb.cjs';
+import registryServices from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_grpc_pb.cjs';
 
 class LightweightResourceDiscoveryGrpcService extends ServerBaseGrpcService {
 	constructor() {
@@ -18,7 +18,7 @@ class LightweightResourceDiscoveryGrpcService extends ServerBaseGrpcService {
 		this._resourceDiscoveryService = null;
 	}
 
-	async _initServices(injector) {
+	async _initServices() {
 		this._resourceDiscoveryService = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
 
 		this._grpc.addService(registryServices.RegistryService, {

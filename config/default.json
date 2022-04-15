@@ -9,6 +9,11 @@
 		"cors": {
 			"origin": "*"
 		},
+		"dns": {
+			"label": "registry",
+			"namespace": "mt",
+			"local": true
+		},
 		"grpc": {
 			"port": 7991,
 			"secure": false
@@ -22,7 +27,8 @@
 		},
 		"monitoring": {
 			"host": "localhost",
-			"port": "8125"
+			"port": "8125",
+			"prefix": "registry"
 		},
 		"port": 7990
 	}
