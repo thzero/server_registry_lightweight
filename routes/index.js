@@ -8,7 +8,11 @@ import BaseRoute from '@thzero/library_server/routes/index';
 
 class RegistryRoute extends BaseRoute {
 	constructor(prefix) {
-		super(prefix ? prefix : '/api/registry');
+		super(prefix ? prefix : '/registry');
+	}
+
+	get id() {
+		return 'registry';
 	}
 
 	_initializeRoutes(router) {
