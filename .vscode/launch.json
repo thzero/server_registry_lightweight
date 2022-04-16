@@ -16,7 +16,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Node: Nodemon2",
+			"name": "Node: Nodemon - ESM",
 			"runtimeExecutable": "nodemon",
 			"runtimeArgs":["-r","esm", "--inspect", "--trace-warnings"],
 			"program": "${workspaceFolder}/index.js",
