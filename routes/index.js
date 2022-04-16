@@ -11,6 +11,11 @@ class RegistryRoute extends BaseRoute {
 		super(prefix ? prefix : '/registry');
 	}
 
+	async init(injector, config) {
+		const router = await super.init(injector, config);
+		router.serviceResourceDiscovery = injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
+	}
+
 	get id() {
 		return 'registry';
 	}
@@ -21,8 +26,9 @@ class RegistryRoute extends BaseRoute {
 				text: false,
 			}),
 			async (ctx, next) => {
-				const service = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
-				const response = (await service.deregister(ctx.correlationId, ctx.params.name)).check(ctx);
+				// const service = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
+				// const response = (await ctx..deregister(ctx.correlationId, ctx.params.name)).check(ctx);
+				const response = (await ctx.router.serviceResourceDiscovery.deregister(ctx.correlationId, ctx.params.name)).check(ctx);
 				this._jsonResponse(ctx, Utility.stringify(response));
 			}
 		);
@@ -32,8 +38,9 @@ class RegistryRoute extends BaseRoute {
 				text: false,
 			}),
 			async (ctx, next) => {
-				const service = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
-				const response = (await service.listing(ctx.correlationId, ctx.request.body)).check(ctx);
+				// const service = this._injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
+				// const response = (await service.listing(ctx.correlationId, ctx.request.body)).check(ctx);
+				const response = (await ctx.router.serviceResourceDiscovery.listing(ctx.correlationId, ctx.request.body)).check(ctx);
 				this._jsonResponse(ctx, Utility.stringify(response));
 			}
 		);

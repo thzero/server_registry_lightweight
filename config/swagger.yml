@@ -1,0 +1,84 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Lightweight Registry
+  description: ''
+  contact:
+    name: thZero.com
+schemes:
+- http
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  "/api/v1/registry/{name}":
+    dellete:
+      description: Delete registry entry
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-api-key
+        required: true
+        type: string
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        description: Name of the registry to be deleted
+      responses:
+        '200':
+          description: Success
+  "/api/v1/registry/{name}":
+    get:
+      description: Get information about a registery entry
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-api-key
+        required: true
+        type: string
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        description: Name of the registry to be fetched
+      responses:
+        '200':
+          description: Success
+  "/api/v1/registry/listing":
+    post:
+      description: Register User
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-api-key
+        required: true
+        type: string
+      - in: body
+        name: "body"
+        description: "Search criteria"
+        required: true
+        schema:
+          $ref: "#/definitions/Search"
+      responses:
+        '200':
+          description: Success
+definitions:
+  Search:
+    type: object
+    properties:
+      name:
+        type: string
