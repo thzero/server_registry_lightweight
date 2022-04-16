@@ -1,5 +1,8 @@
 {
 	"app": {
+		"api": {
+			"version": "v1"
+		},
 		"auth": {
 			"claims": {
 				"check": false,
