@@ -1,11 +1,11 @@
 {
   "name": "server_registry_lightweight",
   "type": "module",
-  "version": "0.13.17",
+  "version": "0.13.18",
   "version_major": 0,
   "version_minor": 13,
-  "version_patch": 17,
-  "version_date": "09/26/2021",
+  "version_patch": 18,
+  "version_date": "04/16/2022",
   "license": "MIT",
   "description": "",
   "author": "thZero",
@@ -26,12 +26,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint .",
     "cli-id": "./node_modules/.bin/library-cli --generate",
-    "cli-update": "./node_modules/.bin/library-cli --updateversion --pi"
+    "cli-id-w": ".\\node_modules\\.bin\\library-cli --generate",
+    "cli-update": "./node_modules/.bin/library-cli --updateversion --pi",
+    "cli-update-w": ".\\node_modules\\.bin\\library-cli --updateversion --pi"
   },
   "dependencies": {
     "@thzero/library_common": "^0.15.8",
     "@thzero/library_common_service": "^0.15.11",
-    "@thzero/library_server": "^0.15.29",
+    "@thzero/library_server": "^0.15.30",
     "@thzero/library_server_logger_pino": "^0.15.10",
     "@thzero/library_server_logger_winston": "^0.15.9",
     "@thzero/library_server_repository_mongo": "^0.15.11",
