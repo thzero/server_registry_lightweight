@@ -1,18 +1,19 @@
+// eslint-disable-next-line node/no-extraneous-import
 import koaBody from 'koa-body';
 
-import Constants from '../constants';
+import Constants from '../../constants';
 
 import Utility from '@thzero/library_common/utility/index';
 
-import BaseRoute from '@thzero/library_server/routes/index';
+import BaseRoute from '@thzero/library_server_koa/routes/index';
 
 class RegistryRoute extends BaseRoute {
 	constructor(prefix) {
 		super(prefix ? prefix : '/registry');
 	}
 
-	async init(injector, config) {
-		const router = await super.init(injector, config);
+	async init(injector, app, config) {
+		const router = await super.init(injector, app, config);
 		router.serviceResourceDiscovery = injector.getService(Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY);
 	}
 
