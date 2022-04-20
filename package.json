@@ -25,10 +25,8 @@
     "start": "node -r esm --trace-uncaught index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint .",
-    "cli-id": "./node_modules/.bin/library-cli --generate",
-    "cli-id-w": ".\\node_modules\\.bin\\library-cli --generate",
-    "cli-update": "./node_modules/.bin/library-cli --updateversion --pi",
-    "cli-update-w": ".\\node_modules\\.bin\\library-cli --updateversion --pi"
+    "cli-id": "library-cli --generate",
+    "cli-update": "library-cli --updateversion --pi"
   },
   "dependencies": {
     "@thzero/library_common": "^0.15.12",
