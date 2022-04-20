@@ -1,8 +1,7 @@
 import Constants from '../../constants';
 import RepositoryConstants from '@thzero/library_server_repository_mongo/constants';
 
-// import ApiBootPlugin from '@thzero/library_server_fastify/boot/plugins/api';
-import ApiBootPlugin from '@thzero/library_server_koa/boot/plugins/api';
+import ApiBootPlugin from '@thzero/library_server_fastify/boot/plugins/api';
 
 import repositoryCollectionsService from '../../repository/mongo/collections';
 
