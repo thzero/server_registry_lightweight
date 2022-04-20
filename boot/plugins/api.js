@@ -1,15 +1,13 @@
 import Constants from '../../constants';
 import RepositoryConstants from '@thzero/library_server_repository_mongo/constants';
 
-import ApiBootPlugin from '@thzero/library_server/boot/plugins/api';
+import ApiBootPlugin from '@thzero/library_server_fastify/boot/plugins/api';
 
 import repositoryCollectionsService from '../../repository/mongo/collections';
 
 // import registryRepository from '../../repository/inmemory/registry';
 import registryRepository from '../../repository/redis/registry';
 import registrySearchRepository from '../../repository/mongo/registry';
-
-import registryRoute from '../../routes/index';
 
 import cleanupService from '../../service/cleanup';
 import devnullNotificationService from '../../service/notification/devnull';
@@ -29,12 +27,6 @@ class AppApiBootPlugin extends ApiBootPlugin {
 
 		this._injectRepository(Constants.InjectorKeys.REPOSITORY_REGISTRY, new registryRepository());
 		this._injectRepository(Constants.InjectorKeys.REPOSITORY_REGISTRY_SEARCH, new registrySearchRepository());
-	}
-
-	async _initRoutes() {
-		await super._initRoutes();
-
-		this._initRoute(new registryRoute());
 	}
 
 	async _initServices() {
