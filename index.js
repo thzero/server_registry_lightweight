@@ -2,10 +2,8 @@ import Constants from './constants';
 
 import LibraryUtility from '@thzero/library_common/utility/index';
 
-// import ApiPlugin from './boot/plugins/fastify/api';
 import ApiPlugin from './boot/plugins/koa/api';
 
-// import BootMain from '@thzero/library_server_fastify/boot';
 import BootMain from '@thzero/library_server_koa/boot';
 
 import usageMetricsRepository from '@thzero/library_server/repository/usageMetrics/devnull';
