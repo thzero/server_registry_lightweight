@@ -29,8 +29,9 @@ class RegistryMongoRepository extends MongoRepository {
 		try {
 			// TODO: Refactor to support pagination,etc
 			const collection = await this._getCollectionRegistry(correlationId);
-			
-			const response = await this._fetchExtract(correlationId, await this._find(correlationId, collection, null), this._initResponseExtract(correlationId));
+
+			// const response = await this._fetchExtract(correlationId, await this._count(correlationId, collection, null), await this._fetch(correlationId, collection, null), this._initResponseExtract(correlationId));
+			const response = await this._fetchExtract(correlationId, collection, null, this._initResponseExtract(correlationId));
 			if (this._hasFailed(response))
 				return response;
 
