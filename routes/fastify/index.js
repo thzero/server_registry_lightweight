@@ -1,7 +1,5 @@
 import Constants from '../../constants';
 
-import Utility from '@thzero/library_common/utility/index';
-
 import BaseRoute from '@thzero/library_server_fastify/routes/index';
 
 class RegistryRoute extends BaseRoute {
@@ -23,7 +21,7 @@ class RegistryRoute extends BaseRoute {
 			// eslint-disable-next-line
 			async (request, reply) => {
 				const response = (await router[Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY].deregister(request.correlationId, request.params.name)).check(request);
-				this._jsonResponse(reply, Utility.stringify(response));
+				this._jsonResponse(reply, response);
 			}
 		);
 
@@ -31,7 +29,7 @@ class RegistryRoute extends BaseRoute {
 			// eslint-disable-next-line
 			async (request, reply) => {
 				const response = (await router[Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY].listing(request.correlationId, request.body)).check(request);
-				this._jsonResponse(reply, Utility.stringify(response));
+				this._jsonResponse(reply, response);
 			}
 		);
 
@@ -39,7 +37,7 @@ class RegistryRoute extends BaseRoute {
 			// eslint-disable-next-line
 			async (request, reply) => {
 				const response = (await router[Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY].register(request.correlationId, request.body)).check(request);
-				this._jsonResponse(reply, Utility.stringify(response));
+				this._jsonResponse(reply, response);
 			}
 		);
 
@@ -47,7 +45,7 @@ class RegistryRoute extends BaseRoute {
 			// eslint-disable-next-line
 			async (request, reply) => {
 				const response = (await router[Constants.InjectorKeys.SERVICE_RESOURCE_DISCOVERY].register(request.correlationId, request.params.name)).check(request);
-				this._jsonResponse(reply, Utility.stringify(response));
+				this._jsonResponse(reply, response);
 			}
 		);
 	}
