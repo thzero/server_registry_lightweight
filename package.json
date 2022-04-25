@@ -1,10 +1,10 @@
 {
   "name": "server_registry_lightweight",
   "type": "module",
-  "version": "0.13.19",
+  "version": "0.13.20",
   "version_major": 0,
   "version_minor": 13,
-  "version_patch": 19,
+  "version_patch": 20,
   "version_date": "04/24/2022",
   "license": "MIT",
   "description": "",
@@ -31,8 +31,8 @@
   "dependencies": {
     "@thzero/library_common": "^0.15.13",
     "@thzero/library_common_service": "^0.15.16",
-    "@thzero/library_server": "^0.15.39",
-    "@thzero/library_server_fastify": "^0.15.37",
+    "@thzero/library_server": "^0.15.42",
+    "@thzero/library_server_fastify": "^0.15.39",
     "@thzero/library_server_logger_pino": "^0.15.14",
     "@thzero/library_server_logger_winston": "^0.15.11",
     "@thzero/library_server_repository_mongo": "^0.15.15",
