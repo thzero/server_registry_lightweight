@@ -51,7 +51,7 @@ class LightweightResourceDiscoveryService extends Service {
 	}
 
 	async listing(correlationId, filters) {
-		// TODO: filters
+		// TODO: filters, paginations
 		// const validationName = this._serviceValidation.check(correlationId, this._serviceValidation.filterSchema, filters, null, 'filters');
 		// if (!validationName.success)
 		// 	return validationName;

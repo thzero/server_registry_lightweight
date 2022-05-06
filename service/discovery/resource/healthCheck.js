@@ -48,7 +48,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 	async _healthCheck(correlationId) {
 		try {
 			this._logger.info2(`HEARTBEAT for HEALTHCHECK`, null, correlationId);
-			const listResponse = await this._serviceResourceDiscovery.listing(correlationId);
+			const listResponse = await this._serviceResourceDiscovery.listing(correlationId, { healthCheck: true });
 			if (!listResponse.success) {
 				this._logger.info2(`\t...no resources.`, null, correlationId);
 				return;
