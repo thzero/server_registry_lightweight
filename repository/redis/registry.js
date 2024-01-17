@@ -37,13 +37,13 @@ class RedisRegistryRepository extends RegistryRepository {
 			cleanupInterval = cleanupInterval * 1000;
 
 			this._logger.info2(`HEARTBEAT for CLEANUP`, null, correlationId);
-			let key =await  this._serviceRedis.lpop('list');
+			let key = await this._serviceRedis.lpop('list');
 			let value;
 			while (key) {
 				await this._serviceRedis.del(key);
 				value = await this._serviceRedis.get(key);
 				if (value)
-				await this._serviceRedis.del(key);
+					await this._serviceRedis.del(key);
 
 				key = await this._serviceRedis.lpop('list');
 			}
