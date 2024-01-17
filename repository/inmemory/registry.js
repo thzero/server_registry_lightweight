@@ -1,8 +1,8 @@
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import RegistryRepository from '../registry';
+import RegistryRepository from '../registry.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
 class InMemoryRegistryRepository extends RegistryRepository {
 	constructor() {

@@ -1,8 +1,8 @@
-import Constants from '../../../constants';
+import Constants from '../../../constants.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
-import Service from '@thzero/library_server/service/index';
+import Service from '@thzero/library_server/service/index.js';
 
 class LoaderLightweightResourceDiscoveryService extends Service {
 	constructor() {

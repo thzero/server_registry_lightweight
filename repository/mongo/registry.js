@@ -1,6 +1,6 @@
-import MongoRepository from '@thzero/library_server_repository_mongo';
+import MongoRepository from '@thzero/library_server_repository_mongo/index.js';
 
-class RegistryMongoRepository extends MongoRepository {
+class RegistrySearchMongoRepository extends MongoRepository {
 	async _getCollectionRegistry(correlationId) {
 		return await this._getCollectionFromConfig(correlationId, this._collectionsConfig.getCollectionRegistry());
 	}
@@ -42,7 +42,8 @@ class RegistryMongoRepository extends MongoRepository {
 			}
 
 			// const response = await this._fetchExtract(correlationId, collection, null, this._initResponseExtract(correlationId));
-			const response = await this._aggregateExtract(correlationId, await this._count(correlationId, collection, queryF), await this._aggregate(correlationId, collection, queryA), this._initExtractResponse());
+			// const response = await this._aggregateExtract(correlationId, await this._count(correlationId, collection, queryF), await this._aggregate(correlationId, collection, queryA), this._initResponseExtract());
+			const response = await this._aggregateExtract2(correlationId, collection, queryA, queryA, this._initResponseExtract(correlationId));
 			if (this._hasFailed(response))
 				return response;
 
@@ -71,4 +72,4 @@ class RegistryMongoRepository extends MongoRepository {
 	}
 }
 
-export default RegistryMongoRepository;
+export default RegistrySearchMongoRepository;

@@ -1,4 +1,4 @@
-import Service from '@thzero/library_server/service/index';
+import Service from '@thzero/library_server/service/index.js';
 
 class GrpcHealthCheckLightweightResourceDiscoveryService extends Service {
 	constructor() {

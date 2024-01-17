@@ -1,9 +1,9 @@
-import Constants from '../../../constants';
-import LibraryCommonServiceConstants from '@thzero/library_common_service/constants';
+import Constants from '../../../constants.js';
+import LibraryCommonServiceConstants from '@thzero/library_common_service/constants.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
-import Service from '@thzero/library_server/service/index';
+import Service from '@thzero/library_server/service/index.js';
 
 class HealthCheckLightweightResourceDiscoveryService extends Service {
 	constructor() {
@@ -21,7 +21,7 @@ class HealthCheckLightweightResourceDiscoveryService extends Service {
 	async init(injector) {
 		await super.init(injector);
 
-		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
+		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.SERVICE_REGISTRY);
 
 		this._serviceMonitoring = this._injector.getService(LibraryCommonServiceConstants.InjectorKeys.SERVICE_MONITORING);
 		this._serviceNotification = this._injector.getService(Constants.InjectorKeys.SERVICE_NOTIFICATION);
