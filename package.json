@@ -28,20 +28,20 @@
     "id": "library-cli --nano"
   },
   "dependencies": {
-    "@thzero/library_common": "^0.17.14",
-    "@thzero/library_common_service": "^0.17.3",
-    "@thzero/library_server": "^0.17.20",
-    "@thzero/library_server_fastify": "^0.17.22",
+    "@thzero/library_common": "^0.17.15",
+    "@thzero/library_common_service": "^0.17.5",
+    "@thzero/library_server": "^0.17.24",
+    "@thzero/library_server_fastify": "^0.17.24",
     "@thzero/library_server_logger_pino": "^0.17.9",
     "@thzero/library_server_logger_winston": "^0.17.5",
-    "@thzero/library_server_repository_mongo": "^0.17.12",
+    "@thzero/library_server_repository_mongo": "^0.17.13",
     "@thzero/library_server_repository_redis_ioredis": "^0.17.4",
-    "@thzero/library_server_service_discovery_mdns": "^0.17.5",
+    "@thzero/library_server_service_discovery_mdns": "^0.17.6",
     "@thzero/library_server_service_discovery_resources_lightweight_proto": "^0.17.1",
     "@thzero/library_server_service_grpc": "^0.17.12",
     "@thzero/library_server_service_rest_axios": "^0.17.9",
     "@thzero/library_server_validation_joi": "^0.17.11",
-    "async-mutex": "^0.4.0",
+    "async-mutex": "^0.4.1",
     "pino-pretty": "^10.3.1"
   },
   "devDependencies": {
