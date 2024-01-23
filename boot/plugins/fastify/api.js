@@ -1,6 +1,6 @@
-import AppApiBootPlugin from '../api';
+import AppApiBootPlugin from '../api.js';
 
-import registryRoute from '../../../routes/fastify/index';
+import registryRoute from '../../../routes/fastify/index.js';
 
 class FastifyAppApiBootPlugin extends AppApiBootPlugin {
 	async _initRoutes() {

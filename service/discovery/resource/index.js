@@ -1,8 +1,8 @@
-import Constants from '../../../constants';
+import Constants from '../../../constants.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
-import Service from '@thzero/library_server/service/index';
+import Service from '@thzero/library_server/service/index.js';
 
 class LightweightResourceDiscoveryService extends Service {
 	constructor() {
@@ -14,7 +14,7 @@ class LightweightResourceDiscoveryService extends Service {
 	async init(injector) {
 		await super.init(injector);
 
-		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY);
+		this._repositoryRegistry = this._injector.getService(Constants.InjectorKeys.SERVICE_REGISTRY);
 	}
 
 	async initPost() {
@@ -51,7 +51,7 @@ class LightweightResourceDiscoveryService extends Service {
 	}
 
 	async listing(correlationId, filters) {
-		// TODO: filters
+		// TODO: filters, paginations
 		// const validationName = this._serviceValidation.check(correlationId, this._serviceValidation.filterSchema, filters, null, 'filters');
 		// if (!validationName.success)
 		// 	return validationName;

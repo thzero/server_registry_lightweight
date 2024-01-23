@@ -1,8 +1,8 @@
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import Constants from '../../../../constants';
+import Constants from '../../../../constants.js';
 
-import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server';
+import ServerBaseGrpcService from '@thzero/library_server_service_grpc/server.js';
 
 import registryMessages from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_pb.cjs';
 import registryServices from '@thzero/library_server_service_discovery_resources_lightweight_proto/binary/registry_grpc_pb.cjs';

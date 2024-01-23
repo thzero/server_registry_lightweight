@@ -1,4 +1,4 @@
-import VersionService from '@thzero/library_server/service/version';
+import VersionService from '@thzero/library_server/service/version.js';
 
 class AppVersionService extends VersionService {
 }

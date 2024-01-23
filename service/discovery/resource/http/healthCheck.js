@@ -1,6 +1,6 @@
-import LibraryConstants from '@thzero/library_server/constants';
+import LibraryConstants from '@thzero/library_server/constants.js';
 
-import Service from '@thzero/library_server/service/index';
+import Service from '@thzero/library_server/service/index.js';
 
 class HttpHealthCheckLightweightResourceDiscoveryService extends Service {
 	constructor() {

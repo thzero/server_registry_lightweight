@@ -1,8 +1,8 @@
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import RegistryRepository from '../registry';
+import RegistryRepository from '../registry.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
 class InMemoryRegistryRepository extends RegistryRepository {
 	constructor() {
@@ -91,9 +91,20 @@ class InMemoryRegistryRepository extends RegistryRepository {
 		}
 	}
 
-	async listing(correlationId) {
+	async listing(correlationId, filters) {
 		try {
-			return this._successResponse(this._mapToArrayOfObj(this._registry), correlationId);
+			let results = null;
+			let queried = false;
+			if (filters) {
+				if (filters.healthCheck !== null && filters.healthCheck !== undefined) {
+					results = this._registry.values.find(l => l.healthCheck === filters.healthCheck);
+					queried = true;
+				}
+			}
+			if (!queried) 
+			results = this._mapToArrayOfObj(this._registry);
+
+			return this._successResponse(results, correlationId);
 		}
 		catch (err) {
 			return this._error('RegistryRepository', 'listing', null, err, null, null, correlationId);

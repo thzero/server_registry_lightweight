@@ -1,29 +1,35 @@
-import Redis from 'ioredis';
 import { Mutex as asyncMutex } from 'async-mutex';
 
-import Constants from '../../constants';
+import Constants from '../../constants.js';
 
-import RegistryRepository from '../registry';
+import LibraryUtility from '@thzero/library_common/utility/index.js';
 
-import LibraryUtility from '@thzero/library_common/utility/index';
+import BaseRedisRepository from '@thzero/library_server_repository_redis_ioredis/index.js';
 
-class RedisRegistryRepository extends RegistryRepository {
+class RedisRegistryRepository extends BaseRedisRepository {
 	constructor() {
 		super();
 
 		this._mutexRegistry = new asyncMutex();
 
-		this._serviceRedis = null;
 		this._serviceSearch = null;
 	}
-
+	
 	async init(injector) {
 		await super.init(injector);
 
-		const url = this._config.get(`db.redis.connection`);
-		this._serviceRedis = new Redis(url);
-		
 		this._serviceSearch = this._injector.getService(Constants.InjectorKeys.REPOSITORY_REGISTRY_SEARCH);
+	}
+
+	async publish(correlationId, channel, message) {
+		this._enforceNotEmpty('RedisDiscoveryRepository', 'publish', channel, 'channel', correlationId);
+		this._enforceNotEmpty('RedisDiscoveryRepository', 'publish', message, 'message', correlationId);
+
+		const client = await this._getClient(correlationId);
+		await client.publish(correlationId, channel, JSON.stringify(message,
+			(key, value) =>
+				(typeof value === 'string' && /^\d+n$/.test(value)) ? BigInt(value.slice(0, -1)) : value // return everything else unchanged
+			));
 	}
 
 	async cleanup(correlationId, cleanupInterval) {
@@ -37,15 +43,16 @@ class RedisRegistryRepository extends RegistryRepository {
 			cleanupInterval = cleanupInterval * 1000;
 
 			this._logger.info2(`HEARTBEAT for CLEANUP`, null, correlationId);
-			let key =await  this._serviceRedis.lpop('list');
+			const client = await this._getClient(correlationId);
+			let key = await client.lpop('list');
 			let value;
 			while (key) {
-				await this._serviceRedis.del(key);
-				value = await this._serviceRedis.get(key);
+				await client.del(key);
+				value = await client.get(key);
 				if (value)
-				await this._serviceRedis.del(key);
+					await client.del(key);
 
-				key = await this._serviceRedis.lpop('list');
+				key = await client.lpop('list');
 			}
 
 			return this._success(correlationId);
@@ -63,17 +70,18 @@ class RedisRegistryRepository extends RegistryRepository {
 
 		const release = await this._mutexRegistry.acquire();
 		try {
-			const node = await this._serviceRedis.get(node.name);
+			const client = await this._getClient(correlationId);
+			const node = await client.get(node.name);
 			if (node) {
 				if (node.static)
 				return this._success(correlationId);
 			}
 
-			await this._serviceRedis.del(node.name);
-			const pos = await this._serviceRedis.lpos('list', node.name);
+			await client.del(node.name);
+			const pos = await client.lpos('list', node.name);
 			if (pos) {
-				await this._serviceRedis.lrem('list', node.name);
-				await this._serviceRedis.srem('set', node);
+				await client.lrem('list', node.name);
+				await client.srem('set', node);
 			}
 
 			return this._success(correlationId);
@@ -90,7 +98,8 @@ class RedisRegistryRepository extends RegistryRepository {
 		try {
 			this._enforceNotEmpty('RegistryRepository', 'get', name, 'name', correlationId);
 
-			const results = await this._serviceRedis.get(name);
+			const client = await this._getClient(correlationId);
+			const results = await client.get(name);
 			if (results)
 				return this._successResponse(JSON.parse(results), correlationId);
 
@@ -125,10 +134,12 @@ class RedisRegistryRepository extends RegistryRepository {
 			node.successes = 0;
 			node.successesAccumulator = 0;
 			const nodeR = JSON.stringify(node);
-			await this._serviceRedis.set(node.name, nodeR);
+			
+			const client = await this._getClient(correlationId);
+			await client.set(node.name, nodeR);
 			if (!node.static) {
-				await this._serviceRedis.lpush('list', node.name);
-				await this._serviceRedis.sadd('set', nodeR);
+				await client.lpush('list', node.name);
+				await client.sadd('set', nodeR);
 			}
 			await this._serviceSearch.update(correlationId, node);
 
@@ -148,12 +159,13 @@ class RedisRegistryRepository extends RegistryRepository {
 
 		const release = await this._mutexRegistry.acquire();
 		try {
-			const node = await this._serviceRedis.get(name);
+			const client = await this._getClient(correlationId);
+			const node = await client.get(name);
 			if (!node)
 				return this._success(correlationId);
 
 			const nodeJ = JSON.parse(node);
-			await this._serviceRedis.srem('set', node);
+			await client.srem('set', node);
 			nodeJ.timestamp = LibraryUtility.getTimestamp();
 			if (success) {
 				nodeJ.successes += 1;
@@ -166,7 +178,7 @@ class RedisRegistryRepository extends RegistryRepository {
 				nodeJ.successes = 0;
 				nodeJ.successesAccumulator = 0;
 			}
-			await this._serviceRedis.set(node.name, JSON.stringify(JSON.stringify(node)));
+			await client.set(node.name, JSON.stringify(JSON.stringify(node)));
 
 			return this._success(correlationId);
 		}

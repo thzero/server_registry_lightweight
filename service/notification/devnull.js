@@ -1,4 +1,4 @@
-import NotificationService from './index';
+import NotificationService from './index.js';
 
 class DevNullNotificationService extends NotificationService {
 	constructor() {

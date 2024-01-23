@@ -1,6 +1,6 @@
-import Constants from '../../constants';
+import Constants from '../../constants.js';
 
-import BaseRoute from '@thzero/library_server_fastify/routes/index';
+import BaseRoute from '@thzero/library_server_fastify/routes/index.js';
 
 class RegistryRoute extends BaseRoute {
 	constructor(prefix) {

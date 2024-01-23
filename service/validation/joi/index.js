@@ -2,7 +2,7 @@ import Joi from 'joi';
 import JoiDate from '@joi/date';
 Joi.extend(JoiDate);
 
-import JoiBaseValidationService from '@thzero/library_server_validation_joi/index';
+import JoiBaseValidationService from '@thzero/library_server_validation_joi/index.js';
 
 class JoiValidationService extends JoiBaseValidationService {
 	_address = Joi.string()
